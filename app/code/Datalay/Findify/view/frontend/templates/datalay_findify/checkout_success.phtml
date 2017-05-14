@@ -1,0 +1,42 @@
+<?php $orderId = Mage::getSingleton('checkout/session')->getLastOrderId(); ?>
+<?php if($orderId): ?>
+    <?php $order = Mage::getModel('sales/order')->load($orderId); ?>
+    <div class="findify_purchase_order" style="display:none;">
+        <span class="order_number"><?php echo $order->getIncrementId(); ?></span>
+        <span class="price_currency_code"><?php echo $order->getOrderCurrencyCode(); ?></span>
+        <div class="purchased_items">
+            <?php 
+            $prodarr=array();
+            $i=0;
+            foreach($order->getAllItems() AS $item) : ?>
+            <?php
+            $pro=Mage::getModel('catalog/product')->load($item->getProductId());
+                if($pro->getTypeId() == "simple"){
+                    $parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($pro->getId());
+                    if(!$parentIds)
+                        $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($pro->getId());
+                    if(isset($parentIds[0])){
+                        $parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+                        $prid = $parent->getId();
+                    } else $prid = $pro->getId();
+                } else $prid = $item->getProductId();
+                $prodarr[$i]['id']=$prid;
+                $prodarr[$i]['type']=$pro->getTypeId();
+                $prodarr[$i]['price']=$item->getPrice();
+
+            if($pro->getTypeId() != "configurable"){
+                if($item->getPrice()==0 && $prid==$prodarr[$i-1]['id'] && $prodarr[$i-1]['type']=="configurable") $pric=$prodarr[$i-1]['price'];
+                else  $pric=$item->getPrice();
+            ?>
+                <div class="line_item">
+                    <span class="product_id"><?php echo $prid; ?></span>
+                    <span class="quantity"><?php echo $item->getQtyOrdered(); ?></span>
+                    <span class="unit_price"><?php echo $pric; ?></span>
+                </div>
+            <?php
+            }
+            $i++;
+            endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

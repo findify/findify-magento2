@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+
+	<tab id="findify" translate="label" sortOrder="200">
+            <label>Findify</label>
+        </tab>
+
+        <section id="attributes" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Feed Configuration</label>
+            <tab>findify</tab>
+            <resource>Datalay_Findify::general</resource>
+            <group id="schedule" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Feed Schedule</label>
+                <field id="isenabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cronhour" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cron hours:</label>
+                    <comment>If set to "3", the feed will be generated at 3am. If set to "3,11,19" will generate the feed at 3am, 11am and 7pm. No spaces should be inserted between values. If empty of wrong value, hour will be set as "1"</comment>
+                    <depends>
+                        <field id="*/*/isenabled">1</field>
+                    </depends>
+                    <!-- <backend_model>findifyfeed/adminhtml_system_config_backend_findifymodel_cron</backend_model> -->
+                </field>
+                <field id="cronminutes" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cron minutes:</label>
+                    <comment>Same format as hours field. If empty of wrong value, minutes will be set as "30"</comment>
+                    <!-- <backend_model>findifyfeed/adminhtml_system_config_backend_findifymodel_cron</backend_model> -->
+		    <depends>
+                        <field id="*/*/isenabled">1</field>
+                    </depends>
+                </field>
+                <field id="isrunning" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Feed generation running now</label>
+                    <!-- <frontend_model>findifyfeed/adminhtml_feedisrunning</frontend_model> -->
+                </field>
+                <field id="generatenow" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Synchonize now</label>
+                    <!-- <frontend_model>findifyfeed/generatenow</frontend_model> -->
+                </field>
+            </group>
+            <group id="general" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Feed Attributes</label>
+                <comment>Choose here the extra attributes that you would like to make searchable or create filters from. The order does not matter. The left column correspond to the label of your attribute. The right column needs to be set to a lowercased name that will be present in the feed</comment>
+                <field id="attributes" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Feed Attributes</label>
+                    <!-- <frontend_model>findifyfeed/config_selectAttributes</frontend_model> -->
+                    <!-- <backend_model>adminhtml/system_config_backend_serialized_array</backend_model> -->
+
+		    <frontend_model>Datalay\Findify\Block\Customerfield</frontend_model>
+		    <!-- <source_model>Datalay\Findify\Model\Config\Source\Custom</source_model> -->
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+
+                    <!-- <frontend_model>Datalay\Findify\Block\Adminhtml\System\Config\Myarrayfield</frontend_model> -->
+                    <!-- <backend_model>Datalay\Findify\Model\System\Config\Myarrayfield</backend_model> -->
+                </field>
+                <!-- <field id="customfields" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+		    <label>Custom Fields</label>
+		    <frontend_model>Datalay\Findify\Block\Customerfield</frontend_model>
+		</field> -->
+            </group>
+            <group id="feedinfo" type="text" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="1" translate="label">
+                <label>Feed Info</label>
+                <field id="feedfilename" translate="label" sortOrder="10" showInDefault="0" showInWebsite="0" showInStore="1">
+                    <label>Feed name:</label>
+                    <comment>If empty, jsonl_feed-storecode will be used by default. Ex: jsonl_feed-french</comment>
+                </field>
+                <field id="feedurl" translate="label" sortOrder="20" showInDefault="0" showInWebsite="0" showInStore="1">
+                    <label>Product feed URL:</label>
+                    <!-- <frontend_model>findifyfeed/adminhtml_feedurl</frontend_model> -->
+                    <comment><strong>Findify needs this URL to synchronize your products</strong></comment>
+                </field>
+                <field id="feedlastgenerated" translate="label" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="1">
+                    <label>Last updated at:</label>
+                    <!-- <frontend_model>findifyfeed/adminhtml_feeddate</frontend_model> -->
+                </field>
+            </group>
+            <group id="analytics" type="text" sortOrder="40" showInDefault="0" showInWebsite="0" showInStore="1" translate="label">
+                <label>JS Integration</label>
+                <field id="isenabled" translate="label" type="select" sortOrder="10" showInDefault="0" showInWebsite="0" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="jstag" translate="label" sortOrder="20" showInDefault="0" showInWebsite="0" showInStore="1">
+                    <label>JavaScript tag URL:</label>
+                    <comment>You can find the JavaScript tag in your Findify account</comment>
+		    <depends>
+                        <field id="*/*/isenabled">1</field>
+                    </depends>
+                    <validate>validate-no-empty</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

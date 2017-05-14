@@ -1,0 +1,15 @@
+<?php $product = Mage::registry('current_product'); ?>
+<?php if($product && $product->getId()) : ?>
+ <?php
+   if($product->getTypeId() == "simple"){
+         $parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($product->getId());
+         if(!$parentIds)
+             $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+         if(isset($parentIds[0])){
+           $parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+          $pid = $parent->getId();
+        } else $pid = $product->getId();
+   } else $pid = $product->getId();
+ ?>
+    <div class="findify_page_product" style="display:none;"><?php echo $pid; ?></div>
+<?php endif; ?>

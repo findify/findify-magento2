@@ -1,0 +1,43 @@
+<?php
+
+namespace Datalay\Findify\Console;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Magento\Framework\App\State;
+
+class RunCronCommand extends Command
+{
+
+    protected $cronTask;
+
+    public function __construct(
+        // \Magento\Framework\App\Action\Context $context,
+        \Datalay\Findify\Model\Cron $cronTask,
+        State $state
+    ) {
+        try {
+            $state->setAreaCode('adminhtml');
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            // Intentionally left empty.
+        }
+        $this->cronTask = $cronTask;
+        //parent::__construct($context);
+        parent::__construct();
+    }
+
+
+ 
+    protected function configure()
+    {
+        $this->setName('datalay:run_cron')->setDescription('Runs Findify Feed generation cron task');
+    }
+ 
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        //$output->writeln('Hello World!');
+        $this->cronTask->export();
+    }
+ 
+}

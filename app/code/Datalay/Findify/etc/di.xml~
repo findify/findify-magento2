@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- <type name="Magento\ImportExport\Model\Export\Adapter\Csv">
+        <arguments>
+            <argument name="destination" xsi:type="string">feeds/product_feed.csv</argument>
+        </arguments>
+    </type> -->
+    <type name="Magento\Framework\Console\CommandList">
+            <arguments>
+                    <argument name="commands" xsi:type="array">
+                            <item name="run_cron" xsi:type="object">Datalay\Simple\Console\RunCronCommand</item>
+                    </argument>
+            </arguments>
+    </type>
+</config>
