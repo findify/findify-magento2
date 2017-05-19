@@ -1,6 +1,9 @@
 <?php
 
 namespace Datalay\Findify\Block;
+
+use Magento\Framework\Api\SearchCriteriaBuilder;
+
 class CustomerGroup extends \Magento\Framework\View\Element\Html\Select {
    /**
      * methodList
@@ -8,6 +11,10 @@ class CustomerGroup extends \Magento\Framework\View\Element\Html\Select {
      * @var array
      */
     protected $groupfactory;
+    //protected $attributeFactory;
+    protected $searchCriteriaBuilder;
+    protected $attributeRepository;
+    
    /**
      * Constructor
      *
@@ -17,10 +24,18 @@ class CustomerGroup extends \Magento\Framework\View\Element\Html\Select {
      * @param array $data
      */
     public function __construct(
-    \Magento\Framework\View\Element\Context $context, \Magento\Customer\Model\GroupFactory $groupfactory, array $data = []
+      \Magento\Framework\View\Element\Context $context,
+      \Magento\Customer\Model\GroupFactory $groupfactory,
+      //\Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory,
+      \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository,
+      SearchCriteriaBuilder $searchCriteriaBuilder,
+      array $data = []
     ) {
         parent::__construct($context, $data);
         $this->groupfactory = $groupfactory;
+        //$this->attributeFactory = $attributeFactory;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->attributeRepository = $attributeRepository;
     } 
     /**
      * Returns countries array
@@ -38,11 +53,32 @@ class CustomerGroup extends \Magento\Framework\View\Element\Html\Select {
             //foreach ($customerGroupCollection as $customerGroup) {
             //         $this->addOption($customerGroup->getCustomerGroupId(), $customerGroup->getCustomerGroupCode());
             //}
-            $this->addOption('134','activity');
-            $this->addOption('153','climate');
-            $this->addOption('93','color');
-            $this->addOption('139','gender');
-            $this->addOption('83','manufacturer');
+            //$this->addOption('134','activity');
+            //$this->addOption('153','climate');
+            //$this->addOption('93','color');
+            //$this->addOption('139','gender');
+            //$this->addOption('83','manufacturer');
+            
+            //$attributeInfo = $this->attributeFactory->getCollection();
+	    $searchCriteria = $this->searchCriteriaBuilder->create();
+	    $attributeRepository = $this->attributeRepository->getList(
+	        'catalog_product',
+        	$searchCriteria
+	    );
+
+	    foreach ($attributeRepository->getItems() as $items) {
+	        //$items->getAttributeCode();
+        	//$items->getFrontendLabel();
+
+                $attributecode = $items->getAttributecode();
+                $attributelabel = $items->getFrontendLabel();
+                if ($attributelabel == ''){
+                    continue;
+                }
+                $attributelabel = str_replace("'", '', $attributelabel); // if an attribute contains ' it will break the js template so we remove it
+                $this->addOption($attributecode, $attributelabel);
+            }            
+            
         }
 
 /*        $attributes = Mage::getResourceModel('catalog/product_attribute_collection')

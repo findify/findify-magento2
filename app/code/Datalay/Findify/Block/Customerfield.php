@@ -58,8 +58,23 @@ protected function getCustomerGroupRenderer() {
     }
 */
 
+/*
 
-   protected function _prepareToRender() {
+< protected function _prepareToRender() {
+<         $this->addColumn( 'attributename', [
+---
+> 
+>    protected function _prepareToRender() {
+>         $this->addColumn( 'customer_group', [
+67c68
+<         $this->addColumn('attributejson', array(
+---
+>         $this->addColumn('active', array(
+
+*/
+
+
+protected function _prepareToRender() {
         $this->addColumn( 'customer_group', [
             'label' => __('Magento Attribute'),
             'renderer' => $this->getCustomerGroupRenderer(),
