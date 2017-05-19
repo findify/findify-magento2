@@ -20,7 +20,7 @@ Magento compatible versions: 2.1
 Once the extension has been installed, you can access the Findify feed configuration by navigating to "System > Configuration".
 On the left menu, click on "Findify", then "Feed Configuration".
 
-![feed_attributes](doc/system_configuration.png)
+![system_configuration](doc/system_configuration.png)
 
 ## Feed Attributes
 To add a new field to the feed you just need to:
