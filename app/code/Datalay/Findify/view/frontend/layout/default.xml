@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <referenceBlock name="head.additional">
+            <block class="Datalay\Findify\Block\Jstag" name="findifyjstag" as="findifyjstag.head" template="Datalay_Findify::headjs.phtml" ifconfig="attributes/analytics/isenabled"/>
+        </referenceBlock>
         <referenceContainer name="header-wrapper">
             <block class="Magento\Framework\View\Element\Template" name="top.search" as="topSearch" template="Datalay_Findify::form.mini.phtml" />
         </referenceContainer>
@@ -9,5 +12,3 @@
         <block template="Datalay_Findify::checkout_cart.phtml" class="Datalay\Findify\Block\Cart" name="findify_tracking_code_cart"/>
     </referenceBlock>
 </page>
-
-
