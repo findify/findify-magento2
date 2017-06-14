@@ -1,0 +1,54 @@
+<?php $order = $block->getOrder();
+
+//var_dump($order);
+?>
+
+<?php // $orderId = Mage::getSingleton('checkout/session')->getLastOrderId(); ?>
+<?php // if($orderId): ?>
+    <?php //$order = Mage::getModel('sales/order')->load($orderId); ?>
+    <div data-findify-event="purchase" data-findify-order-id="<?php echo $order->getIncrementId(); ?>" data-findify-currency="<?php echo $order->getOrderCurrencyCode(); ?>" data-findify-revenue="<?php echo $order->getGrandTotal(); ?>" style="display:none;">
+        <?php 
+        $prodarr=array();
+        $i=0;
+
+        foreach($order->getAllItems() AS $item) {
+            $isconfigurable=0;
+            $eachProductId=$item->getProductId();
+            $eachProductType=$item->getProductType();
+            $eachProductPrice=$item->getPrice();
+            $eachProductQty=$item->getQtyOrdered();
+            //$pro=Mage::getModel('catalog/product')->load($eachProductId);
+                if($eachProductType == "simple"){
+                    //$parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($eachProductId);
+                    //if(!$parentIds)
+                        //$parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($eachProductId);
+                    if(isset($parentIds[0]) && $prodarr[$i-1] && $prodarr[$i-1]['type']=="configurable"){
+                        $isconfigurable=1;
+                        $childId=$eachProductId;
+                        //$parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+                        $prid = $parent->getId();
+                    } else $prid = $eachProductId;
+                } else $prid = $eachProductId;
+                $prodarr[$i]['id']=$prid;
+                $prodarr[$i]['type']=$eachProductType;
+                $prodarr[$i]['qty']=$eachProductQty;
+                $prodarr[$i]['price']=$eachProductPrice;
+		$qty=$eachProductQty;
+            //Mage::log(var_dump($prodarr[$i]));
+            if($eachProductType != "configurable"){
+                if($prodarr[$i-1] && $prodarr[$i-1]['type']=="configurable") {
+			$pric=$prodarr[$i-1]['price'];
+			$prid=$prodarr[$i-1]['id'];
+			$qty=$prodarr[$i-1]['qty'];
+		}else{
+			$pric=$eachProductPrice;
+			$qty=$eachProductQty;
+		}
+            ?>
+            <div data-findify-item-id="<?php echo $prid; ?>"<?php if ($isconfigurable): ?> data-findify-variant-item-id="<?php echo $childId; ?>"<?php endif; ?> data-findify-unit-price="<?php echo $pric; ?>" data-findify-quantity="<?php echo $qty; ?>"></div>
+            <?php
+            }
+            $i++;
+        } ?>
+    </div>
+<?php //endif; ?>

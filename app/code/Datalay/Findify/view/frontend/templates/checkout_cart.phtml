@@ -1,0 +1,44 @@
+<div data-findify-event="update-cart" style="display:none;">
+<?php 
+
+$prodarr=array();
+$i=0;
+
+$quote = $block->getCheckoutSession()->getQuote();
+$items = $quote->getAllItems();
+
+foreach($items as $item):
+    $isconfigurable=0;
+    $eachProductId=$item->getProductId();
+    $eachProductType=$item->getProductType();
+    $eachProductPrice=$item->getPrice();
+    $eachProductQty=$item->getQty();
+    //$pro=Mage::getModel('catalog/product')->load($eachProductId);
+        if(false && $eachProductType == "simple"){
+            $parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($eachProductId);
+            if(!$parentIds)
+                $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($eachProductId);
+            if(isset($parentIds[0]) && $prodarr[$i-1] && $prodarr[$i-1]['type']=="configurable"){
+                $isconfigurable=1;
+                $childId=$eachProductId;
+                $parent = Mage::getModel('catalog/product')->load($parentIds[0]);
+                $prid = $parent->getId();
+            } else $prid = $eachProductId;
+        } else $prid = $eachProductId;
+        $prodarr[$i]['id']=$prid;
+        $prodarr[$i]['type']=$eachProductType;
+        $prodarr[$i]['qty']=$eachProductQty;
+        $prodarr[$i]['price']=$eachProductPrice;
+	$qty=$eachProductQty;
+    if($eachProductType != "configurable"){
+        if($prodarr[$i-1] && $prodarr[$i-1]['type']=="configurable") {$pric=$prodarr[$i-1]['price'];$prid=$prodarr[$i-1]['id'];$qty=$prodarr[$i-1]['qty'];}
+        else  {$pric=$eachProductPrice;$qty=$eachProductQty;}
+    ?>
+    <div data-findify-item-id="<?php echo $prid; ?>"<?php if ($isconfigurable): ?> data-findify-variant-item-id="<?php echo $childId; ?>"<?php endif; ?> data-findify-unit-price="<?php echo $pric; ?>" data-findify-quantity="<?php echo $qty; ?>"></div>
+    <?php
+    }
+    $i++;
+endforeach; ?>
+
+</div>
+                                                                                                                                                                                                                                                                

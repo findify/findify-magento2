@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <body>
-        <referenceContainer name="content">
-            <block template="Datalay_Findify::datalay_findify/product_view.phtml" class="Magento\Framework\View\Element\Template" name="findify_tracking_code" after="-"/>
-        </referenceContainer>
-    </body>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <referenceBlock name="content">
+        <block template="Datalay_Findify::product_view.phtml" class="Datalay\Findify\Block\Product" name="findify_tracking_code"/>
+    </referenceBlock>
 </page>
