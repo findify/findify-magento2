@@ -16,16 +16,11 @@ class RunCronCommand extends Command
         \Datalay\Findify\Model\Cron $cronTask,
         State $state
     ) {
-        try {
-            $state->setAreaCode('adminhtml');
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            // empty
-        }
         $this->cronTask = $cronTask;
+        $this->state = $state;
+        
         parent::__construct();
     }
-
-
  
     protected function configure()
     {
@@ -34,6 +29,10 @@ class RunCronCommand extends Command
  
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (!$this->state->getAreaCode()) {
+            $this->state->setAreaCode('adminhtml');
+        }
+
         $this->cronTask->export();
     }
  

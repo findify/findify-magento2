@@ -31,7 +31,7 @@ foreach($items as $item):
         $prodarr[$i]['price']=$eachProductPrice;
 	$qty=$eachProductQty;
     if($eachProductType != "configurable"){
-        if($prodarr[$i-1] && $prodarr[$i-1]['type']=="configurable") {$pric=$prodarr[$i-1]['price'];$prid=$prodarr[$i-1]['id'];$qty=$prodarr[$i-1]['qty'];}
+        if($i > 0 && $prodarr[$i-1] && $prodarr[$i-1]['type']=="configurable") {$pric=$prodarr[$i-1]['price'];$prid=$prodarr[$i-1]['id'];$qty=$prodarr[$i-1]['qty'];}
         else  {$pric=$eachProductPrice;$qty=$eachProductQty;}
     ?>
     <div data-findify-item-id="<?php echo $prid; ?>"<?php if ($isconfigurable): ?> data-findify-variant-item-id="<?php echo $childId; ?>"<?php endif; ?> data-findify-unit-price="<?php echo $pric; ?>" data-findify-quantity="<?php echo $qty; ?>"></div>

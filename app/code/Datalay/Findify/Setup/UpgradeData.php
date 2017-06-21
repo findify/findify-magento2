@@ -1,6 +1,6 @@
 <?php
  
-namespace Vendor\Module\Setup;
+namespace Datalay\Findify\Setup;
  
 use Magento\Framework\Setup\UpgradeDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;

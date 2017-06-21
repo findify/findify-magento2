@@ -16,30 +16,26 @@
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="cronhour" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <!-- <field id="cronhour" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Cron hours:</label>
                     <comment>If set to "3", the feed will be generated at 3am. If set to "3,11,19" will generate the feed at 3am, 11am and 7pm. No spaces should be inserted between values. If empty of wrong value, hour will be set as "1"</comment>
                     <depends>
                         <field id="*/*/isenabled">1</field>
                     </depends>
-                    <!-- <backend_model>findifyfeed/adminhtml_system_config_backend_findifymodel_cron</backend_model> -->
-                </field>
-                <field id="cronminutes" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                </field> -->
+                <!-- <field id="cronminutes" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Cron minutes:</label>
                     <comment>Same format as hours field. If empty of wrong value, minutes will be set as "30"</comment>
-                    <!-- <backend_model>findifyfeed/adminhtml_system_config_backend_findifymodel_cron</backend_model> -->
 		    <depends>
                         <field id="*/*/isenabled">1</field>
                     </depends>
-                </field>
-                <field id="isrunning" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                </field> -->
+                <!-- <field id="isrunning" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Feed generation running now</label>
-                    <!-- <frontend_model>findifyfeed/adminhtml_feedisrunning</frontend_model> -->
-                </field>
-                <field id="generatenow" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                </field> -->
+                <!-- <field id="generatenow" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Synchonize now</label>
-                    <!-- <frontend_model>findifyfeed/generatenow</frontend_model> -->
-                </field>
+                </field> -->
             </group>
             <group id="general" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
                 <label>Feed Attributes</label>
@@ -69,11 +65,13 @@
                 </field>
                 <field id="feedurl" translate="label" sortOrder="20" showInDefault="0" showInWebsite="0" showInStore="1">
                     <label>Product feed URL:</label>
+		    <frontend_model>Datalay\Findify\Block\Feedurl</frontend_model>
                     <!-- <frontend_model>findifyfeed/adminhtml_feedurl</frontend_model> -->
                     <comment><strong>Findify needs this URL to synchronize your products</strong></comment>
                 </field>
                 <field id="feedlastgenerated" translate="label" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="1">
                     <label>Last updated at:</label>
+                    <frontend_model>Datalay\Findify\Block\Feeddate</frontend_model>
                     <!-- <frontend_model>findifyfeed/adminhtml_feeddate</frontend_model> -->
                 </field>
             </group>
