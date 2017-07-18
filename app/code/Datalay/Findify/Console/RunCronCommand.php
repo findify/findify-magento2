@@ -9,7 +9,6 @@ use Magento\Framework\App\State;
 
 class RunCronCommand extends Command
 {
-
     protected $cronTask;
 
     public function __construct(
@@ -18,7 +17,7 @@ class RunCronCommand extends Command
     ) {
         $this->cronTask = $cronTask;
         $this->state = $state;
-        
+
         parent::__construct();
     }
  
@@ -29,10 +28,7 @@ class RunCronCommand extends Command
  
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->state->getAreaCode()) {
-            $this->state->setAreaCode('adminhtml');
-        }
-
+        $this->state->setAreaCode('adminhtml');
         $this->cronTask->export();
     }
  

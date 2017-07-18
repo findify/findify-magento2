@@ -1,7 +1,6 @@
 <?php
-namespace Datalay\Findify\Block;
 
-//class Feedurl extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray
+namespace Datalay\Findify\Block;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
@@ -11,18 +10,12 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 class Feedurl extends Field
 {
     protected $_template = 'Datalay_Findify::feedurl.phtml';
-    //protected $storeManager;
-    //protected $scopeConfig;
-        
+
     public function __construct(
-        //\Magento\Store\Model\StoreManagerInterface $storeManager,
-        //\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         Context $context,
         array $data = []
     ) {
-        //$this->storeManager = $storeManager;
-        //$this->scopeConfig = $scopeConfig;
-                
+
         parent::__construct($context, $data);
     }
 
@@ -37,25 +30,6 @@ class Feedurl extends Field
         return $this->_toHtml();
     }
 
-/*    public function getAjaxUrl()
-    {
-        return $this->getUrl('datalay_findify/system_config/collect');
-    }
-*/
-/*    public function getButtonHtml()
-    {
-        $button = $this->getLayout()->createBlock(
-            'Magento\Backend\Block\Widget\Button'
-        )->setData(
-            [
-                'id' => 'collect_button',
-                'label' => __('Collect Data'),
-            ]
-        );
-
-        return $button->toHtml();
-    }
-*/
     public function getUrlText()
     {
         $baseUrl = $this->_storeManager->getStore()->getBaseUrl();
@@ -74,5 +48,5 @@ class Feedurl extends Field
         
         return $url;
     }
+
 }
-?>

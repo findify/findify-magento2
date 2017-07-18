@@ -1,7 +1,7 @@
 <?php
+
 namespace Datalay\Findify\Block\Config\Adminhtml\Form\Field;
 
-//class Attribute extends Mage_Core_Block_Html_Select
 class Attribute implements \Magento\Framework\Option\ArrayInterface
 {
     public function _toHtml()

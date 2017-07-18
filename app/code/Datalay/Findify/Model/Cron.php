@@ -1,4 +1,5 @@
 <?php
+
 namespace Datalay\Findify\Model;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -11,7 +12,6 @@ use Magento\Store\Model\StoreRepository;
 
 class Cron
 {
-    //protected $date;
     protected $appEmulation;
     protected $attributeRepository;
     protected $categoryFactory;
@@ -38,7 +38,6 @@ class Cron
         SearchCriteriaBuilder $searchCriteriaBuilder,
         FilterBuilder $filterBuilder,
         \Psr\Log\LoggerInterface $logger,
-        //\Magento\Framework\Stdlib\DateTime\DateTime $date
         Image $productImageHelper,
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
 	\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -59,7 +58,6 @@ class Cron
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->filterBuilder = $filterBuilder;
         $this->logger = $logger;
-        //$this->date = $date;
         $this->image = $productImageHelper;
         $this->attributeRepository = $attributeRepository;
         $this->categoryFactory = $categoryFactory;
@@ -253,4 +251,5 @@ class Cron
         file_put_contents("compress.zlib://$fileextradata", $jsonextradata);
 
     } // end export()
-} // end Cron class
+
+}

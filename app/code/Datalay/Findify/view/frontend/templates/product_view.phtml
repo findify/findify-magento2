@@ -1,8 +1,11 @@
 <?php
+
 $product = $block->getCurrentProduct();
+
 if($product && $product->getId()) :
 	$pid = $product->getId();
 ?>
-    <div data-findify-event="view-page" data-findify-item-id="<?php echo $pid; ?>"></div>
+
+<div data-findify-event="view-page" data-findify-item-id="<?php echo $pid; ?>"></div>
 
 <?php endif; ?>

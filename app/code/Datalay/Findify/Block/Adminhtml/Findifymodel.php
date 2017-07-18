@@ -1,7 +1,6 @@
 <?php
+
 namespace Datalay\Findify\Block\Adminhtml;
-
-
 
 class Findifymodel extends \Magento\Backend\Block\Widget\Grid\Container{
 

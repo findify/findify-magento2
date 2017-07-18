@@ -1,17 +1,11 @@
 <?php
+
 namespace Datalay\Findify\Helper;
 
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
-
-    /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
     protected $scopeConfig;
 
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
     protected $storeManager;
 
     public function __construct(
@@ -21,6 +15,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
     }
+
     public function getFeedUrl()
     {
         $mediapath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);
@@ -50,7 +45,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
         return (string) $fileurl;
     }
-    
     
     public function getFeedFileDate()
     {
@@ -95,7 +89,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             ->addFieldToFilter('executed_at', array('neq' => 'NULL'))
             ->load();
 
-	//Mage::log('pendingSchedules: '.$pendingSchedules->getSize());
 	if($pendingSchedules->getSize() > 0) {
 	    $isRunning = "Yes";
 	}else{
@@ -114,6 +107,4 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $findifyJsTagWrapped;
     }
     
-
 }
-	 

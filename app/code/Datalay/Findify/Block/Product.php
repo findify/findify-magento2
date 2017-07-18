@@ -1,5 +1,7 @@
 <?php
+
 namespace Datalay\Findify\Block;
+
 use Magento\Framework\View\Element\Template;
 
 class Product extends Template
@@ -7,7 +9,6 @@ class Product extends Template
     protected $_registry;
 
     public function __construct(
-        // \Magento\Framework\View\Element\Template\Context $context,   ???                
         \Magento\Backend\Block\Template\Context $context,       
         \Magento\Framework\Registry $registry,
         array $data = []
@@ -33,5 +34,3 @@ class Product extends Template
     }   
 
 }
-
-?>

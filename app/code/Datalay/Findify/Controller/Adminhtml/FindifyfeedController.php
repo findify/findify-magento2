@@ -1,6 +1,6 @@
 <?php
-namespace Datalay\Findify\Controller\Adminhtml;
 
+namespace Datalay\Findify\Controller\Adminhtml;
 
 class Findifyfeed extends \Magento\Backend\App\Action
 {
@@ -12,7 +12,7 @@ class Findifyfeed extends \Magento\Backend\App\Action
         $timecreated   = strftime("%Y-%m-%d %H:%M:%S",  mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
         $timescheduled = strftime("%Y-%m-%d %H:%M:%S", mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y")));
         $jobCode = 'findifyfeed_crongeneratefeed';
-        //Mage::log('Adding scheduled job - JobCode: '.$jobCode.' - $timecreated: '.$timecreated.' - $timescheduled: '.$timescheduled);
+
         try {
                 $schedule = Mage::getModel('cron/schedule');
                 $schedule->setJobCode($jobCode)

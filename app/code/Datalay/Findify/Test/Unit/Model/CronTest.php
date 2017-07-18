@@ -1,25 +1,11 @@
 <?php
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Datalay\Findify\Test\Unit\Model;
 
 class CronTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \Datalay\Findify\Model\Cron
-     */
     protected $model;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
     protected $categoryRepositoryMock;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
     protected $categoryTreeMock;
 
     protected function setUp()
