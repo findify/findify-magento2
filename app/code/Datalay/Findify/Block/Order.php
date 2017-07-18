@@ -42,4 +42,5 @@ class Order extends Template
 	$parentIds = $this->catalogProductTypeConfigurable->getParentIdsByChild($productId);
         return $parentIds;
     }
+
 }

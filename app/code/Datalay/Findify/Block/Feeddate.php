@@ -45,7 +45,7 @@ class Feeddate extends Field
             $timezone = $this->_scopeConfig->getValue('general/locale/timezone', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
             date_default_timezone_set($timezone);
             return date("F d Y H:i:s", filemtime($file));
-        } elses {
+        } else {
             return "$file does not exist yet";
         }
 
