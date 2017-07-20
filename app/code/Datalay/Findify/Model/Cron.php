@@ -31,6 +31,7 @@ class Cron
     protected $storeRepository;
     protected $productMetadata;
     protected $moduleList;
+    protected $directoryList;
     
     public function __construct(
         ProductRepositoryInterface $productRepository,
@@ -39,6 +40,7 @@ class Cron
         FilterBuilder $filterBuilder,
         \Psr\Log\LoggerInterface $logger,
         Image $productImageHelper,
+        \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
 	\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         AttributeRepositoryInterface $attributeRepository,
@@ -59,6 +61,7 @@ class Cron
         $this->filterBuilder = $filterBuilder;
         $this->logger = $logger;
         $this->image = $productImageHelper;
+        $this->directoryList = $directoryList;
         $this->attributeRepository = $attributeRepository;
         $this->categoryFactory = $categoryFactory;
 	$this->scopeConfig = $scopeConfig;
@@ -78,7 +81,8 @@ class Cron
     {
         $stores = $this->storeRepository->getList();
 
-        $fileextradata = 'pub/media/findify/feedextradata.gz';
+        $pubFolder = $this->directoryList->getPath('pub');                    
+        $fileextradata = $pubFolder.'/media/findify/feedextradata.gz';
         $baseUrl = $this->storeManager->getStore()->getBaseUrl();
 	$jsonextradata = array();
         $extradata = array(
@@ -109,9 +113,9 @@ class Cron
                     $configfilename = $this->scopeConfig->getValue('attributes/feedinfo/feedfilename', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                     $filename = str_replace("/", "", $configfilename);
                     if(empty($filename)){
-                            $filename = 'jsonl_feed-'.$storeCode;
+                        $filename = 'jsonl_feed-'.$storeCode;
                     }
-                    $file = 'pub/media/findify/'.$filename.'.gz';
+                    $file = $pubFolder.'/media/findify/'.$filename.'.gz';
         
                     foreach ($items as $item) {
                         $product_data = array();

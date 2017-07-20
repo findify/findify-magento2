@@ -3,7 +3,7 @@
     <group id="findify">
         <job name="datalay_findify_export" instance="Datalay\Findify\Model\Cron" method="export">
             <config_path>attributes/schedule/cron_expr</config_path>
-            <!-- <schedule>0 */12 * * *</schedule> -->
+            <!-- <schedule>30 01 * * *</schedule> -->
         </job>
     </group>
 </config>
