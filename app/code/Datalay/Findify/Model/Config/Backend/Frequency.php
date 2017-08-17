@@ -34,8 +34,8 @@ class Frequency extends \Magento\Framework\App\Config\Value
         $timearray = explode(',', $time);
 
         $cronExprArray = [
-            intval($timearray[1]), //Minute
-            intval($timearray[0]), //Hour
+            isset($timearray[1])?intval($timearray[1]):'00', //Minute
+            isset($timearray[0])?intval($timearray[0]):'00', //Hour
             $frequency == \Magento\Cron\Model\Config\Source\Frequency::CRON_MONTHLY ? '1' : '*', //Day of the Month
             '*', //Month of the Year
             $frequency == \Magento\Cron\Model\Config\Source\Frequency::CRON_WEEKLY ? '1' : '*', //Day of the Week
