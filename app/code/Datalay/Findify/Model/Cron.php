@@ -98,7 +98,7 @@ class Cron
 	    $storeId = $eachStore["store_id"];
 	    $this->storeManager->setCurrentStore($storeId);
 
-	    $feedisenabled = $this->scopeConfig->getValue('attributes/schedule/isenabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+	    $feedisenabled = $this->scopeConfig->getValue('attributes/schedule/isenabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
             if($feedisenabled){
                 $searchCriteria = $this->searchCriteriaBuilder->create();
                 $searchResults = $this->productRepository->getList($searchCriteria);
@@ -110,7 +110,7 @@ class Cron
                     $starttime = new \DateTime('NOW');
 
                     // get filename from system configuration, or use default json_feed-<storeCode> if empty
-                    $configfilename = $this->scopeConfig->getValue('attributes/feedinfo/feedfilename', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+                    $configfilename = $this->scopeConfig->getValue('attributes/feedinfo/feedfilename', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
                     $filename = str_replace("/", "", $configfilename);
                     if(empty($filename)){
                         $filename = 'jsonl_feed-'.$storeCode;
@@ -191,7 +191,7 @@ class Cron
                         $product_data['short_description'] = $item->getShortDescription();
 
                         // User selected attributes via System / Configuration:
-                        $selectedattributes = $this->scopeConfig->getValue('attributes/general/attributes', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+                        $selectedattributes = $this->scopeConfig->getValue('attributes/general/attributes', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
                         if ($selectedattributes) {
                             $selectedattributes = unserialize($selectedattributes);
                         }
@@ -202,6 +202,10 @@ class Cron
                                 $attrfilelabel = $selectedattributesRow['active'];
                                 $attrname = $selectedattributesRow['customer_group'];
                                 $attributecontent = $item->getAttributeText($attrname);
+			    	/* for text attributes: */
+			    	if(!$attributecontent)
+					$attributecontent = $item->getData($attrname);
+
                                 if (!empty($attributecontent)){
                                   $product_data[$attrfilelabel] = $attributecontent;
                                 }else{
