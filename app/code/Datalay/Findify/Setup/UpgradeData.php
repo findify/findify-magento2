@@ -27,7 +27,7 @@ class UpgradeData implements UpgradeDataInterface
                 ->setIsActive(true)
                 ->setPageLayout('1column')
                 ->setStores(array(0)) //available for all store views
-                ->setContent('<div data-findify-attr=\"findify-search-results\"></div>')
+                ->setContent('<div data-findify-attr="findify-search-results"></div>')
                 ->save();
         }
  

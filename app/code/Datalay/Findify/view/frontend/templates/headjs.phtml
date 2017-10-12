@@ -2,6 +2,7 @@
 $jstag = $block->getJsTag();
 if($jstag) :
 ?>
+    <script src=“//cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js”></script>
     <script type="text/javascript" src="<?php echo $jstag; ?>"></script>
 
 <?php endif; ?>
