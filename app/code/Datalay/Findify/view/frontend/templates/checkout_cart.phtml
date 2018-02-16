@@ -20,7 +20,7 @@ foreach ($items as $item) {
         if (!$parentIds) {
 	    $parentIds = $this->getConfigurableParentIds($eachProductId);
         }
-        if (isset($parentIds[0]) && $-1 >= 0 && $prodarr[$i-1] && $prodarr[$i-1]['type'] == "configurable") {
+        if (isset($parentIds[0]) && $i-1 >= 0 && $prodarr[$i-1] && $prodarr[$i-1]['type'] == "configurable") {
             $isconfigurable = 1;
             $childId = $eachProductId;
 	    $prid = $parentIds[0];
