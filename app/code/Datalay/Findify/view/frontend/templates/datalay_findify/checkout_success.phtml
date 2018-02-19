@@ -25,7 +25,7 @@
                 $prodarr[$i]['price']=$item->getPrice();
 
             if($pro->getTypeId() != "configurable"){
-                if($item->getPrice()==0 && $prid==$prodarr[$i-1]['id'] && $prodarr[$i-1]['type']=="configurable") $pric=$prodarr[$i-1]['price'];
+                if($item->getPrice()==0 && $i-1 >= 0 && $prid==$prodarr[$i-1]['id'] && $prodarr[$i-1]['type']=="configurable") $pric=$prodarr[$i-1]['price'];
                 else  $pric=$item->getPrice();
             ?>
                 <div class="line_item">
