@@ -34,7 +34,7 @@ class Cron
     protected $directoryList;
     
     public function __construct(
-        ProductRepositoryInterface $productRepository,
+        \Datalay\Findify\Model\Catalog\ProductRepository $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         FilterBuilder $filterBuilder,
@@ -101,7 +101,7 @@ class Cron
 	    $feedisenabled = $this->scopeConfig->getValue('attributes/schedule/isenabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
             if($feedisenabled){
                 $searchCriteria = $this->searchCriteriaBuilder->create();
-                $searchResults = $this->productRepository->getList($searchCriteria);
+                $searchResults = $this->productRepository->getListForStore($storeId);
                 $items = $searchResults->getItems();
 
                 if (count($items) > 0) {
