@@ -199,6 +199,8 @@ class Cron
                         // User selected attributes via System / Configuration:
                         if (is_array($selectedattributes)) {
                             foreach($selectedattributes as $selectedattributesRow) {
+			     	if(!isset($selectedattributesRow['active']))  continue;
+
                                 $attrfilelabel = $selectedattributesRow['active'];
                                 $attrname = $selectedattributesRow['customer_group'];
                                 $attributecontent = $item->getAttributeText($attrname);
