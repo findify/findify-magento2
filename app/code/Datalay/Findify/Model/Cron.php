@@ -32,6 +32,7 @@ class Cron
     protected $productMetadata;
     protected $moduleList;
     protected $directoryList;
+    protected $serialize;
     
     public function __construct(
         \Datalay\Findify\Model\Catalog\ProductRepository $productRepository,
@@ -53,7 +54,8 @@ class Cron
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
 	\Magento\Framework\App\ProductMetadataInterface $productMetadata,
 	\Magento\Framework\Module\ModuleListInterface $moduleList,
-	\Magento\Catalog\Helper\ImageFactory $imageHelperFactory
+	\Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
+	\Magento\Framework\Serialize\Serializer\Json $serialize
     ) {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
@@ -75,6 +77,7 @@ class Cron
 	$this->storeRepository = $storeRepository;
 	$this->productMetadata = $productMetadata;
 	$this->moduleList = $moduleList;
+	$this->serialize = $serialize;
     }
 
     public function export()
@@ -193,7 +196,7 @@ class Cron
                         // User selected attributes via System / Configuration:
                         $selectedattributes = $this->scopeConfig->getValue('attributes/general/attributes', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
                         if ($selectedattributes) {
-                            $selectedattributes = unserialize($selectedattributes);
+                            $selectedattributes = $this->serialize->unserialize($selectedattributes);
                         }
 
                         // User selected attributes via System / Configuration:
