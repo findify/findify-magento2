@@ -32,7 +32,7 @@ class Cron
     protected $productMetadata;
     protected $moduleList;
     protected $directoryList;
-    protected $serialize;
+    
     
     public function __construct(
         \Datalay\Findify\Model\Catalog\ProductRepository $productRepository,
@@ -54,8 +54,7 @@ class Cron
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
 	\Magento\Framework\App\ProductMetadataInterface $productMetadata,
 	\Magento\Framework\Module\ModuleListInterface $moduleList,
-	\Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
-	\Magento\Framework\Serialize\Serializer\Json $serialize
+	\Magento\Catalog\Helper\ImageFactory $imageHelperFactory
     ) {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
@@ -77,7 +76,6 @@ class Cron
 	$this->storeRepository = $storeRepository;
 	$this->productMetadata = $productMetadata;
 	$this->moduleList = $moduleList;
-	$this->serialize = $serialize;
     }
 
     public function export()
@@ -196,7 +194,7 @@ class Cron
                         // User selected attributes via System / Configuration:
                         $selectedattributes = $this->scopeConfig->getValue('attributes/general/attributes', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
                         if ($selectedattributes) {
-                            $selectedattributes = $this->serialize->unserialize($selectedattributes);
+                            $selectedattributes = $this->_unserialize($selectedattributes);
                         }
 
                         // User selected attributes via System / Configuration:
@@ -257,12 +255,25 @@ class Cron
                     );
                     
                 } // end if count items > 0
-	    } // end if($feedisenabled)
+	    	} // end if($feedisenabled)
         } // end eachStore
 
 	$jsonextradata[] = json_encode($extradata);
         file_put_contents("compress.zlib://$fileextradata", $jsonextradata);
 
     } // end export()
+	
+	
+	
+	protected function _unserialize($string)
+    {
+        $result = json_decode($string, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \InvalidArgumentException('Unable to unserialize value.');
+        }
+        return $result;
+    }
+	
+
 
 }
