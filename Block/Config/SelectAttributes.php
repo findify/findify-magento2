@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Block\Config;
+namespace Findify\Findify\Block\Config;
 
 class SelectAttributes extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray
 {
@@ -26,7 +26,7 @@ class SelectAttributes extends \Magento\Config\Block\System\Config\Form\Field\Fi
     protected function  _getRenderer() 
     {
         if (!$this->_itemRenderer) {
-            $this->_itemRenderer = $this->getLayout()->createBlock('\Datalay\Findify\Block\Config\Adminhtml\Form\Field\Attribute', '', array('is_render_to_js_template'=>true));
+            $this->_itemRenderer = $this->getLayout()->createBlock('\Findify\Findify\Block\Config\Adminhtml\Form\Field\Attribute', '', array('is_render_to_js_template'=>true));
         }
         return $this->_itemRenderer;
     }

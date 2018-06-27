@@ -3,7 +3,7 @@
     <type name="Magento\Framework\Console\CommandList">
             <arguments>
                     <argument name="commands" xsi:type="array">
-                            <item name="run_cron" xsi:type="object">Datalay\Findify\Console\RunCronCommand</item>
+                            <item name="run_cron" xsi:type="object">Findify\Findify\Console\RunCronCommand</item>
                     </argument>
             </arguments>
     </type>

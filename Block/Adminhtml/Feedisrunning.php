@@ -1,13 +1,13 @@
 <?php
 
-namespace Datalay\Findify\Block\Adminhtml;
+namespace Findify\Findify\Block\Adminhtml;
 
 class Feedisrunning extends \Magento\Config\Block\System\Config\Form\Field
 {
     protected $findifyFeedHelper;
 
     public function __construct(
-        \Datalay\Findify\Helper\Data $findifyFeedHelper
+        \Findify\Findify\Helper\Data $findifyFeedHelper
     ) {
         $this->findifyFeedHelper = $findifyFeedHelper;
     }

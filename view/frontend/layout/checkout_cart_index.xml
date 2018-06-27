@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
      <referenceBlock name="content">
-        <block template="Datalay_Findify::checkout_cart.phtml" class="Datalay\Findify\Block\Cart" name="findify_cart_tracking_code"/>
+        <block template="Findify_Findify::checkout_cart.phtml" class="Findify\Findify\Block\Cart" name="findify_cart_tracking_code"/>
     </referenceBlock>
 </page>

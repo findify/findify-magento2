@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Controller\Adminhtml;
+namespace Findify\Findify\Controller\Adminhtml;
 
 class Findifyfeed extends \Magento\Backend\App\Action
 {

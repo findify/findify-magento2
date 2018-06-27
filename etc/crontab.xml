@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="findify">
-        <job name="datalay_findify_export" instance="Datalay\Findify\Model\Cron" method="export">
+        <job name="findify_findify_export" instance="Findify\Findify\Model\Cron" method="export">
             <config_path>attributes/schedule/cron_expr</config_path>
             <!-- <schedule>30 01 * * *</schedule> -->
         </job>

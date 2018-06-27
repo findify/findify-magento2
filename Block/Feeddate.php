@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Block;
+namespace Findify\Findify\Block;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
@@ -8,7 +8,7 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 
 class Feeddate extends Field
 {
-    protected $_template = 'Datalay_Findify::feeddate.phtml';
+    protected $_template = 'Findify_Findify::feeddate.phtml';
         
     public function __construct(
         Context $context,

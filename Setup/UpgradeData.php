@@ -1,6 +1,6 @@
 <?php
  
-namespace Datalay\Findify\Setup;
+namespace Findify\Findify\Setup;
  
 use Magento\Framework\Setup\UpgradeDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -20,7 +20,7 @@ class UpgradeData implements UpgradeDataInterface
     {
         $setup->startSetup();
  
-        if (version_compare($context->getVersion(), '0.0.1') < 0) {
+        if (version_compare($context->getVersion(), '1.0.0') < 0) {
             $page = $this->pageFactory->create();
             $page->setTitle('search')
                 ->setIdentifier('search')

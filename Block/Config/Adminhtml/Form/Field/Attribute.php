@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Block\Config\Adminhtml\Form\Field;
+namespace Findify\Findify\Block\Config\Adminhtml\Form\Field;
 
 class Attribute implements \Magento\Framework\Option\ArrayInterface
 {
