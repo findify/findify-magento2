@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Model\Config\Backend;
+namespace Findify\Findify\Model\Config\Backend;
 
 class Frequency extends \Magento\Framework\App\Config\Value
 {

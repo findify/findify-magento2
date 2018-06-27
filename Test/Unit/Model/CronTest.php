@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Test\Unit\Model;
+namespace Findify\Findify\Test\Unit\Model;
 
 class CronTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class CronTest extends \PHPUnit_Framework_TestCase
         $this->filterBuilderMock = $this->getMock('\Magento\Framework\Api\FilterBuilder', [], [], '', false);
         $this->csvMock = $this->getMock('\Magento\ImportExport\Model\Export\Adapter\Csv', [], [], '', false);
 
-        $this->model = new \Datalay\Findify\Model\Cron(
+        $this->model = new \Findify\Findify\Model\Cron(
             $this->productRepositoryMock,
             $this->searchCriteriaBuilderMock,
             $this->filterBuilderMock,

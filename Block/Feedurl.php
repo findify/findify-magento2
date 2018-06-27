@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Block;
+namespace Findify\Findify\Block;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
@@ -9,7 +9,7 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 
 class Feedurl extends Field
 {
-    protected $_template = 'Datalay_Findify::feedurl.phtml';
+    protected $_template = 'Findify_Findify::feedurl.phtml';
 
     public function __construct(
         Context $context,

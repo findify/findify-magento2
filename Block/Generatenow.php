@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Block;
+namespace Findify\Findify\Block;
 
 class Generatenow extends \Magento\Config\Block\System\Config\Form\Field
 {
@@ -8,7 +8,7 @@ class Generatenow extends \Magento\Config\Block\System\Config\Form\Field
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate('datalay/system/config/button.phtml');
+        $this->setTemplate('findify/system/config/button.phtml');
     }
  
     protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)

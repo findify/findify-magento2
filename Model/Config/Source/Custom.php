@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Model\Config\Source;
+namespace Findify\Findify\Model\Config\Source;
 
 class Custom implements \Magento\Framework\Option\ArrayInterface
 {

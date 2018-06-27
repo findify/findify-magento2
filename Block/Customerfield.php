@@ -1,5 +1,5 @@
 <?php
-namespace Datalay\Findify\Block;
+namespace Findify\Findify\Block;
 
 class Customerfield extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray
 {
@@ -24,7 +24,7 @@ class Customerfield extends \Magento\Config\Block\System\Config\Form\Field\Field
     protected function getCustomerGroupRenderer() {
         if (!$this->_customerGroupRenderer) {
             $this->_customerGroupRenderer = $this->getLayout()->createBlock(
-                    '\Datalay\Findify\Block\CustomerGroup', '', ['data' => ['is_render_to_js_template' => true]]
+                    '\Findify\Findify\Block\CustomerGroup', '', ['data' => ['is_render_to_js_template' => true]]
             );
         }
         return $this->_customerGroupRenderer;

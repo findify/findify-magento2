@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Console;
+namespace Findify\Findify\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,7 +12,7 @@ class RunCronCommand extends Command
     protected $cronTask;
 
     public function __construct(
-        \Datalay\Findify\Model\Cron $cronTask,
+        \Findify\Findify\Model\Cron $cronTask,
         State $state
     ) {
         $this->cronTask = $cronTask;

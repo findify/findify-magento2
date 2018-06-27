@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Model;
+namespace Findify\Findify\Model;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
@@ -35,7 +35,7 @@ class Cron
     
     
     public function __construct(
-        \Datalay\Findify\Model\Catalog\ProductRepository $productRepository,
+        \Findify\Findify\Model\Catalog\ProductRepository $productRepository,
         CategoryRepositoryInterface $categoryRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         FilterBuilder $filterBuilder,
@@ -87,7 +87,7 @@ class Cron
         $baseUrl = $this->storeManager->getStore()->getBaseUrl();
 	$jsonextradata = array();
         $extradata = array(
-        	'extension_version' => $this->moduleList->getOne('Datalay_Findify')['setup_version'],
+        	'extension_version' => $this->moduleList->getOne('Findify_Findify')['setup_version'],
                 'magento_version' => $this->productMetadata->getVersion(),
                 'feeds' => array()
         );

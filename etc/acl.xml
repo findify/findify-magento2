@@ -6,8 +6,8 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Datalay_Findify::findifyfeed" title="Findify Feed" sortOrder="100">
-                                <resource id="Datalay_Findify::general" title="General" sortOrder="10"/>
+                            <resource id="Findify_Findify::findifyfeed" title="Findify Feed" sortOrder="100">
+                                <resource id="Findify_Findify::general" title="General" sortOrder="10"/>
                             </resource>
 			</resource>
 		    </resource>

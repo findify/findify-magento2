@@ -1,6 +1,6 @@
 <?php
 
-namespace Datalay\Findify\Block;
+namespace Findify\Findify\Block;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
 
