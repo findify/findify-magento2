@@ -170,7 +170,7 @@ class Cron
                         $product_data['product_url'] = $item->getProductUrl(); // full url
 
                         $specialprice = $item->getSpecialPrice();
-                        if ($specialprice){
+                        if ($specialprice &&  $specialprice < $item->getPrice()){
                             $specialPriceFromDate = $item->getSpecialFromDate();
                             $specialPriceToDate = $item->getSpecialToDate();
                             if ($this->localeDate->isScopeDateInInterval($storeId, $specialPriceFromDate, $specialPriceToDate)) {
