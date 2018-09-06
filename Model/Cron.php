@@ -32,7 +32,8 @@ class Cron
     protected $productMetadata;
     protected $moduleList;
     protected $directoryList;
-    
+    protected $objectManager;
+    protected $bundleChildren;
     
     public function __construct(
         \Findify\Findify\Model\Catalog\ProductRepository $productRepository,
@@ -54,7 +55,8 @@ class Cron
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
 	\Magento\Framework\App\ProductMetadataInterface $productMetadata,
 	\Magento\Framework\Module\ModuleListInterface $moduleList,
-	\Magento\Catalog\Helper\ImageFactory $imageHelperFactory
+        \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
+        \Magento\Framework\ObjectManagerInterface $objectManager
     ) {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
@@ -76,6 +78,7 @@ class Cron
 	$this->storeRepository = $storeRepository;
 	$this->productMetadata = $productMetadata;
 	$this->moduleList = $moduleList;
+        $this->objectManager = $objectManager;
     }
 
     public function export()
@@ -92,6 +95,8 @@ class Cron
                 'feeds' => array()
         );
 
+        $_products_with_children = array('configurable', 'grouped', 'bundle');
+
         ini_set('memory_limit','-1'); // if store has more than 10000 products, default php memory limits will probably be too low
 
         foreach ($stores as $eachStore) {
@@ -101,22 +106,29 @@ class Cron
 
 	    $feedisenabled = $this->scopeConfig->getValue('attributes/schedule/isenabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
             if($feedisenabled){
-                $searchCriteria = $this->searchCriteriaBuilder->create();
-                $searchResults = $this->productRepository->getListForStore($storeId);
-                $items = $searchResults->getItems();
 
-                if (count($items) > 0) {
                     $jsondata = array();
+                $productTypes = [
+                    ['in' => 'bundle'],
+                    ['nin' => 'bundle']
+                ];
 
                     $starttime = new \DateTime('NOW');
-
                     // get filename from system configuration, or use default json_feed-<storeCode> if empty
                     $configfilename = $this->scopeConfig->getValue('attributes/feedinfo/feedfilename', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeCode);
                     $filename = str_replace("/", "", $configfilename);
+        	    $file = $pubFolder . '/media/findify/' . $filename . '.gz';
                     if(empty($filename)){
                         $filename = 'jsonl_feed-'.$storeCode;
                     }
-                    $file = $pubFolder.'/media/findify/'.$filename.'.gz';
+
+
+                foreach ($productTypes as $typeFilter) {
+
+                    $searchResults = $this->productRepository->getListForStore($storeId, $typeFilter);
+                    $items = $searchResults->getItems();
+
+                    if (count($items) > 0) {
         
                     foreach ($items as $item) {
                         $product_data = array();
@@ -136,7 +148,7 @@ class Cron
                         $product_data['created_at'] = $datetime->format(\DateTime::ATOM);
 
                         // if this product has children, set id as item_group_id                      
-                        if ($product_data['type_id'] == "configurable" || $product_data['type_id'] == "grouped") {
+                            if (in_array($product_data['type_id'], $_products_with_children)) {
                             $product_data['item_group_id'] = $product_data['id'];
                         }else{
                             $product_data['item_group_id'] = '';
@@ -166,7 +178,26 @@ class Cron
                         $product_data['category'] = $pathArray;
 
                         $product_data['title'] = $item->getName(); // name
+
+                            if ($item->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) {
+                                $calculator = $this->objectManager->get(\Findify\Findify\Pricing\Bundle\Adjustment\Calculator::class);
+                                $arguments = [
+                                    'saleableItem' => $item,
+                                    'quantity' => 1,
+                                    'calculator' => $calculator
+                                ];
+                                $bundleObj = $this->objectManager->create(\Magento\Bundle\Pricing\Price\FinalPrice::class, $arguments);
+                                $_minimal_price = $bundleObj->getMinimalPrice();
+                                $product_data['price'] = sprintf('%0.2f', $_minimal_price->getValue()); // price excl tax, two
+                                # store selected child ids
+                                $_selection_ids = $calculator->getSelectionIds();
+                                foreach ($_selection_ids as $_child_id) {
+                                    $this->bundleChildren[$_child_id][] = $product_data['id'];
+                                }
+                            } else {
                         $product_data['price'] = sprintf('%0.2f',$item->getPrice()); // price excl tax, two decimal places
+                            }
+
                         $product_data['product_url'] = $item->getProductUrl(); // full url
 
                         $specialprice = $item->getSpecialPrice();
@@ -200,7 +231,8 @@ class Cron
                         // User selected attributes via System / Configuration:
                         if (is_array($selectedattributes)) {
                             foreach($selectedattributes as $selectedattributesRow) {
-			     	if(!isset($selectedattributesRow['active']))  continue;
+                                    if (!isset($selectedattributesRow['active']))
+                                        continue;
 
                                 $attrfilelabel = $selectedattributesRow['active'];
                                 $attrname = $selectedattributesRow['customer_group'];
@@ -237,13 +269,23 @@ class Cron
                                     $jsondata[] = json_encode($product_data_in_configurable)."\n"; // Add this product data to main json array
                                 }
                             }
-                        }
 
+                                if (isset($this->bundleChildren[$product_data['id']])) { // it belongs to at least one bundle product
+                                    foreach ($this->bundleChildren[$product_data['id']] as $parentId) {
+                                        $product_data_in_bundle = $product_data; // we add to the feed a copy of the simple product for each group that it belongs to, modifying item_group_id in each instance
+                                        $product_data_in_bundle['item_group_id'] = strval($parentId);
+                                        $jsondata[] = json_encode($product_data_in_bundle) . "\n"; // Add this product data to main json array
+                                    }
+                                }
+                            }
                     } // end foreach items as item
+                    } // end if count items > 0
+                }// end foreach filterType
                     
+
+                if (count($jsondata) > 0) {
                     // Write product feed array to gzipped file
                     file_put_contents("compress.zlib://$file", $jsondata);
-
                     // Extra data file
                     $endtime = new \DateTime('NOW');
                     $runinterval = $starttime->diff($endtime);
@@ -253,15 +295,15 @@ class Cron
                             'last_generation_duration' => $elapsed,
                             'last_generation_time' => $starttime
                     );
-                    
-                } // end if count items > 0
+                }
 	    	} // end if($feedisenabled)
         } // end eachStore
 
 	$jsonextradata[] = json_encode($extradata);
         file_put_contents("compress.zlib://$fileextradata", $jsonextradata);
+    }
 
-    } // end export()
+// end export()
 	
 	
 	
@@ -274,6 +316,4 @@ class Cron
         return $result;
     }
 	
-
-
 }
