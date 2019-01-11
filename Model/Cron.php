@@ -194,8 +194,16 @@ class Cron
                                 foreach ($_selection_ids as $_child_id) {
                                     $this->bundleChildren[$_child_id][] = $product_data['id'];
                                 }
-                            } else {
-                        $product_data['price'] = sprintf('%0.2f',$item->getPrice()); // price excl tax, two decimal places
+                            }  elseif ($item->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
+
+                                $price = $item->getPriceInfo()->getPrice(\Magento\Catalog\Pricing\Price\BasePrice::PRICE_CODE)->getValue();
+                                $finalPrice = $item->getPriceInfo()->getPrice(\Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE)->getValue();
+                                
+                                $product_data['price'] = sprintf('%0.2f', $price); // price excl tax, two decimal places
+                                if( $finalPrice < $price)
+                                    $product_data['sale_price'] = sprintf('%0.2f', $finalPrice); // price excl tax, two decimal places
+							} else {
+                        		$product_data['price'] = sprintf('%0.2f',$item->getPrice()); // price excl tax, two decimal places
                             }
 
                         $product_data['product_url'] = $item->getProductUrl(); // full url
