@@ -1,0 +1,5 @@
+<?php /* @var \Findify\Findify\ViewModel\Product $viewModel */ ?>
+<?php $viewModel = $block->getViewModel(); ?>
+<?php if ($viewModel->getProductId()) : ?>
+    <div data-findify-event="view-page" data-findify-item-id="<?= $viewModel->getProductId(); ?>"></div>
+<?php endif; ?>

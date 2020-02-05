@@ -6,13 +6,11 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Findify_Findify::findifyfeed" title="Findify Feed" sortOrder="100">
-                                <resource id="Findify_Findify::general" title="General" sortOrder="10"/>
-                            </resource>
-			</resource>
-		    </resource>
-		</resource>
-	    </resource>
+                            <resource id="Findify_Findify::config" title="Findify Findify config" sortOrder="50" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
         </resources>
     </acl>
 </config>

@@ -2,13 +2,46 @@
 
 namespace Findify\Findify\Model\Config\Backend;
 
+use Magento\Framework\Exception\CronException;
+
+/**
+ * Class Frequency
+ *
+ * @see \Magento\Cron\Model\Config\Backend\Sitemap
+ */
 class Frequency extends \Magento\Framework\App\Config\Value
 {
-    const CRON_STRING_PATH = 'attributes/schedule/cron_expr';
-    const CRON_MODEL_PATH = 'attributes/schedule/run/model';
+    /**
+     * Cron string path
+     */
+    const CRON_STRING_PATH = 'crontab/findify/jobs/findify/schedule/cron_expr';
+
+    /**
+     * Cron mode path
+     */
+    const CRON_MODEL_PATH = 'crontab/findify/jobs/findify/run/model';
+
+    /**
+     * @var \Magento\Framework\App\Config\ValueFactory
+     */
     protected $_configValueFactory;
+
+    /**
+     * @var string
+     */
     protected $_runModelPath = '';
-    
+
+    /**
+     * @param \Magento\Framework\Model\Context                        $context
+     * @param \Magento\Framework\Registry                             $registry
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface      $config
+     * @param \Magento\Framework\App\Cache\TypeListInterface          $cacheTypeList
+     * @param \Magento\Framework\App\Config\ValueFactory              $configValueFactory
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb           $resourceCollection
+     * @param string                                                  $runModelPath
+     * @param array                                                   $data
+     */
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
@@ -22,36 +55,51 @@ class Frequency extends \Magento\Framework\App\Config\Value
     ) {
         $this->_runModelPath = $runModelPath;
         $this->_configValueFactory = $configValueFactory;
-        $this->config = $config;
-        
         parent::__construct($context, $registry, $config, $cacheTypeList, $resource, $resourceCollection, $data);
     }
 
+    /**
+     * After save handler
+     *
+     * @return $this
+     * @throws \Exception
+     */
     public function afterSave()
     {
-        $time = $this->config->getValue('attributes/schedule/time', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        $frequency = $this->config->getValue('attributes/schedule/frequency', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        $timearray = explode(',', $time);
+        $time = $this->getData('groups/cron/fields/time/value');
+        $frequency = $this->getData('groups/cron/fields/frequency/value');
 
         $cronExprArray = [
-            isset($timearray[1])?intval($timearray[1]):'00', //Minute
-            isset($timearray[0])?intval($timearray[0]):'00', //Hour
-            $frequency == \Magento\Cron\Model\Config\Source\Frequency::CRON_MONTHLY ? '1' : '*', //Day of the Month
+            (int)$time[1], //Minute
+            $frequency == \Findify\Findify\Model\Config\Source\Frequency::CRON_HOURLY ? '*' : (int)$time[0], //Hour
+            $frequency == \Findify\Findify\Model\Config\Source\Frequency::CRON_MONTHLY ? '1' : '*', //Day of the Month
             '*', //Month of the Year
-            $frequency == \Magento\Cron\Model\Config\Source\Frequency::CRON_WEEKLY ? '1' : '*', //Day of the Week
+            $frequency == \Findify\Findify\Model\Config\Source\Frequency::CRON_WEEKLY ? '1' : '*', //# Day of the Week
         ];
 
         $cronExprString = join(' ', $cronExprArray);
-        $this->_logger->info('Frequency.php: $cronExprString is: '.$cronExprString);
 
-        try {
-            $this->_configValueFactory->create()->load(self::CRON_STRING_PATH,'path')->setValue($cronExprString)->setPath(self::CRON_STRING_PATH)->save();
-            $this->_configValueFactory->create()->load(self::CRON_MODEL_PATH,'path')->setValue($this->_runModelPath)->setPath(self::CRON_MODEL_PATH)->save();
+            try {
+            $this->_configValueFactory->create()->load(
+                self::CRON_STRING_PATH,
+                'path'
+            )->setValue(
+                $cronExprString
+            )->setPath(
+                self::CRON_STRING_PATH
+            )->save();
+            $this->_configValueFactory->create()->load(
+                self::CRON_MODEL_PATH,
+                'path'
+            )->setValue(
+                $this->_runModelPath
+            )->setPath(
+                self::CRON_MODEL_PATH
+            )->save();
         } catch (\Exception $e) {
-            throw new \Exception(__('We can\'t save the cron expression.'));
+            throw new CronException(__('We can\'t save the cron expression.'));
         }
 
         return parent::afterSave();
     }
-
 }

@@ -1,8 +1,4 @@
-<?php
-$jstag = $block->getJsTag();
-if($jstag) :
-?>
-    
-    <script async type="text/javascript" src="<?php echo $jstag; ?>"></script>
-
+<?php $jsTag = $block->getJsTag(); ?>
+<?php if ($jsTag) : ?>
+<script src="<?= $jsTag; ?>" async defer></script>
 <?php endif; ?>

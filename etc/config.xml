@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <findify_configuration>
+            <general>
+                <remove>1</remove>
+                <parent_url>1</parent_url>
+                <parent_image>1</parent_image>
+                <enable_optional>1</enable_optional>
+                <exclude_product_visibility>1</exclude_product_visibility>
+                <optional_mandatory_fields>sku</optional_mandatory_fields>
+            </general>
+            <smartcollections>
+                <default_store>1</default_store>
+            </smartcollections>
+        </findify_configuration>
+    </default>
+</config>

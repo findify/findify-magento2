@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Indexer/etc/indexer.xsd">
+    <indexer id="findify_findify_generate_smart_collections" view_id="findify_findify_generate_smart_collections" class="Findify\Findify\Model\Indexer\GenerateSmartCollections">
+        <title translate="true">Findify Generate Smart Collections</title>
+        <description translate="true">Programmatically generating smart collections based on categories from Magento</description>
+    </indexer>
+</config>
