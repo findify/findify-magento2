@@ -1,0 +1,10 @@
+<div data-findify-event="update-cart">
+    <!-- ko foreach: updateCartData().products -->
+    <div data-bind="attr: {
+        'data-findify-item-id': id,
+        'data-findify-unit-price': price,
+        'data-findify-quantity': qty,
+        'data-findify-variant-item-id': variant_id !== '' ? variant_id : null
+        }"></div>
+    <!-- /ko -->
+</div>

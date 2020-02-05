@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="findify" translate="label" sortOrder="10">
+            <label>Findify</label>
+        </tab>
+        <section id="findify_configuration" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Findify Configuration</label>
+            <tab>findify</tab>
+            <resource>Findify_Findify::config</resource>
+            <group id="cron" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Cron Schedule Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="frequency" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Frequency</label>
+                    <source_model>Findify\Findify\Model\Config\Source\Frequency</source_model>
+                    <backend_model>Findify\Findify\Model\Config\Backend\Frequency</backend_model>
+                </field>
+                <field id="time" translate="label" type="time" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Start Time</label>
+                </field>
+                <field id="folder" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="4">
+                    <label>Specified Folder</label>
+                    <comment>File will be placed within pub/media/ under specified folder. Default path is pub/media/findify/feed</comment>
+                </field>
+                <field id="generate_feed" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Findify\Findify\Block\System\Configuration\GenerateButton</frontend_model>
+                    <label>Generate Findify Datafeed</label>
+                </field>
+            </group>
+            <group id="general" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Feed Attributes</label>
+                <field id="enable_optional" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Turn optional fields On</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="optional_mandatory_fields" translate="label" type="multiselect" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Optional Mandatory fields</label>
+                    <source_model>Findify\Findify\Block\System\Configuration\Source\OptionalMandatoryFields</source_model>
+                    <comment>You may turn on any of the optional fields</comment>
+                    <depends>
+                        <field id="*/*/enable_optional">1</field>
+                    </depends>
+                </field>
+                <field id="attributes" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Feed Attributes</label>
+                    <frontend_model>Findify\Findify\Block\System\Configuration\OptionalAttributes</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment>Choose here the extra attributes that you would like to make searchable or create filters from. The order does not matter. The left column correspond to the label of your attribute. The middle column needs to be set to a lowercased name that will be present in the feed. The right column is used as the source of the attribute's value</comment>
+                </field>
+                <field id="exclude_product_visibility" translate="label" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude products with selected visibility from the feed</label>
+                    <source_model>Magento\Catalog\Model\Product\Visibility</source_model>
+                </field>
+                <field id="remove" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Remove parent products from appearing in the search</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="parent_url" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Parent URLs for Findify variants</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="parent_image" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Parent Images for Findify variants</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cache_image" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Cached Resized Images</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>This will use Cached Image URLs, which are resized already.</comment>
+                </field>
+            </group>
+            <group id="analytics" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>JS Integration</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="js_tag_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>JavaScript tag URL</label>
+                    <comment>You can find the JavaScript tag in your Findify account</comment>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                    <validate>validate-no-empty</validate>
+                </field>
+            </group>
+            <group id="technical" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Technical settings</label>
+                <field id="page_size" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Batch Size</label>
+                </field>
+            </group>
+            <group id="smartcollections" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Smart Collections</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="email" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email</label>
+                </field>
+                <field id='password' translate='label' type='obscure' sortOrder='20' showInDefault='1' showInWebsite='1' showInStore='1'>
+                    <label>Password</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="default_store" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Default store for smart collections list</label>
+                    <source_model>Findify\Findify\Model\Config\Stores</source_model>
+                    <comment>The list of smart collections for this store can be accessed on this URL http://{domain_name}/rest/V1/findify/smartcollections/list</comment>
+                </field>
+                <field id="api_key" translate="label" type="obscure" sortOrder="40" showInDefault="0" showInWebsite="1" showInStore="1">
+                    <label>API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,51 @@
+<?php /* @var $block \Findify\Findify\Block\System\Configuration\GenerateButton */ ?>
+
+<script>
+    require([
+        'jquery',
+        'prototype'
+    ], function($){
+
+        var generateSpan = $('#generate_span');
+
+        $('#generate_feed_button').click(function () {
+            let params = <?php echo $block->getParams() ?>;
+            generateSpan.find('.generated').hide();
+            generateSpan.find('.processing').show();
+            $('#generate_message_span').text('');
+            $.ajax({
+                url: '<?php echo $block->getAjaxUrl() ?>',
+                data: params,
+                method: 'POST',
+                dataType: 'json',
+                showLoader: true,
+                success: function(response) {
+                    var resultText = '';
+                    generateSpan.find('.processing').hide();
+                    if (null === response) {
+                        resultText = 'Something gone wrong';
+                    } else if (response.status > 200) {
+                        resultText = response.statusText;
+                    } else {
+                        resultText = 'Success';
+                        generateSpan.find('.generated').show();
+                    }
+                    $('#generate_message_span').text(resultText);
+
+                },
+                error: function (xhr, status, error) {
+                    generateSpan.find('.processing').hide();
+                    $('#generate_message_span').text(error);
+                }
+            });
+        });
+
+    });
+</script>
+
+<?php echo $block->getButtonHtml() ?>
+<span class="generate-indicator" id="generate_span">
+    <img class="processing" hidden="hidden" alt="Generating" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
+    <img class="generated" hidden="hidden" alt="Generated" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
+    <span id="generate_message_span"></span>
+</span>

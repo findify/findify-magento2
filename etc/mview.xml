@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
+    <view id="findify_findify_generate_smart_collections" class="Findify\Findify\Model\Indexer\GenerateSmartCollections" group="indexer">
+    </view>
+</config>

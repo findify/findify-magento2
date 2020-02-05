@@ -1,0 +1,18 @@
+<?php /* @var \Findify\Findify\ViewModel\Order $viewModel */ ?>
+<?php $viewModel = $block->getViewModel(); ?>
+<div data-findify-event="purchase"
+     data-findify-order-id="<?= $viewModel->getOrderId(); ?>"
+     data-findify-currency="<?= $viewModel->getCurrency(); ?>"
+     data-findify-revenue="<?= $viewModel->getRevenue(); ?>"
+     data-findify-total-discount="<?= $viewModel->getTotalDiscount(); ?>"
+     data-findify-total-tax="<?= $viewModel->getTotalTax(); ?>"
+     data-findify-total-shipping="<?= $viewModel->getTotalShipping(); ?>">
+    <?php foreach ($viewModel->getProducts() as $product) : ?>
+        <div data-findify-item-id="<?= $product->getId(); ?>"
+            <?php if ($product->getVariantId()) : ?>
+                data-findify-variant-item-id="<?= $product->getVariantId(); ?>"
+            <?php endif; ?>
+             data-findify-unit-price="<?= $product->getPrice(); ?>"
+             data-findify-quantity="<?= $product->getQty(); ?>"></div>
+    <?php endforeach; ?>
+</div>

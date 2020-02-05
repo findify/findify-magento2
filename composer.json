@@ -1,0 +1,19 @@
+{
+    "name": "findify/magento2-findify",
+    "description": "The Findify extension for Magento 2",
+    "type": "magento2-module",
+    "version": "0.0.1",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "magento/framework": "101.0.*||102.0.*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Findify\\Findify\\": ""
+        }
+    }
+}
