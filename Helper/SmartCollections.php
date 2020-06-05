@@ -459,7 +459,11 @@ class SmartCollections extends AbstractHelper
 
         if (count($result) > 0) {
             foreach ($result as $category) {
-                $categoryData[$category['entity_id']][$category['store_id']] = $category['value'];
+                if (isset($category['entity_id'])) {
+                    $categoryData[$category['entity_id']][$category['store_id']] = $category['value'];
+                } else {
+                    $categoryData[$category['row_id']][$category['store_id']] = $category['value'];
+                }
             }
         }
 
