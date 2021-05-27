@@ -112,13 +112,16 @@ By default any Not Visible Individually product is excluded from the feed. You m
 There might be a case when product configurable price is different than their child prices.
 Findify uses `item_group_id` field for grouping variants with their parent product. In a search page, it shows a combined result, which consists of the price range of all products with the same `item_group_id`, both configurable product and its children.
 It may cause a confusion in a product price. Removing the configurable product from the feed will fix the issue, let the price be combined only from children products.
-By default, **Remove parent products from appearing in the search** is turn **On** 
+By default, **Remove parent products from appearing in the search** is turned **On** 
 
 There might be cases when Product URLs for Findify Variants should be pulled from their parent product. In general, simple child products are not single visible, thus their Product URL is not working and useless.
-By default, **Use Parent URLs for Findify variants** is turn **On** 
+By default, **Use Parent URLs for Findify variants** is turned **On** 
  
 The same thing relates to variants' images. A configurable product might have its own images, while child product might not have ones.
-By default, **Use Parent Images for Findify variants** is turn **On** 
+By default, **Use Parent Images for Findify variants** is turned **On** 
+
+Usually you want to show parent titles in the search results, but still have child title searchale. If you want to show child titles in the search results, you will need to disable this setting.
+By default **Use Parent Titles for Findify variants** is turned **On**
 
 ![specific_settings](doc/specific_settings.png)
 
