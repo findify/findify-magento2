@@ -26,6 +26,7 @@ class MandatoryFields implements FieldsInterface
      */
     const ID = 'id';
     const TITLE = 'title';
+    const VARIANT_TITLE = 'variant_title';
     const DESCRIPTION = 'description';
     const PRICE = 'price';
     const IMAGE_URL = 'image_url';
@@ -120,6 +121,9 @@ class MandatoryFields implements FieldsInterface
 
         if ($parent !== null) {
             $productData[self::ITEM_GROUP_ID] = $parent->getId();
+            
+            $productData[self::VARIANT_TITLE] = $productData[self::TITLE];
+            $productData[self::TITLE] = $parent->getName();
 
             if ($this->scopeConfig->getValue(self::USE_PARENT_IMAGE_CONFIG_PATH, 'store', $store)) {
                 $productData[self::IMAGE_URL] = $this->getImageUrl($parent, $store, 'image');
