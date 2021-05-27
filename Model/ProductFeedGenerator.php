@@ -24,7 +24,7 @@ use Psr\Log\LoggerInterface;
 class ProductFeedGenerator
 {
     const IS_CRON_ENABLED_CONFIG_PATH = 'findify_configuration/cron/enable';
-    const BATCH_SIZE_CONFIG_PATH = 'findify_configuration/technical/batch_size';
+    const BATCH_SIZE_CONFIG_PATH = 'findify_configuration/technical/page_size';
     const REMOVE_PARENT_PRODUCT_CONFIG_PATH = 'findify_configuration/general/remove';
     const EXCLUDE_PRODUCT_VISIBILITY_CONFIG_PATH = 'findify_configuration/general/exclude_product_visibility';
     const DEFAULT_BATCH_SIZE = 2000;
