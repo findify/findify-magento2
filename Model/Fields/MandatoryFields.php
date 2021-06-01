@@ -21,11 +21,13 @@ class MandatoryFields implements FieldsInterface
     const USE_PARENT_IMAGE_CONFIG_PATH = 'findify_configuration/general/parent_image';
     const USE_PARENT_URL_CONFIG_PATH = 'findify_configuration/general/parent_url';
     const USE_CACHE_IMAGE_CONFIG_PATH = 'findify_configuration/general/cache_image';
+    const USE_PARENT_TITLE_ON_CHILDREN = 'findify_configuration/general/parent_title';
     /**#@+
      * Mandatory Fields
      */
     const ID = 'id';
     const TITLE = 'title';
+    const VARIANT_TITLE = 'variant_title';
     const DESCRIPTION = 'description';
     const PRICE = 'price';
     const IMAGE_URL = 'image_url';
@@ -120,6 +122,11 @@ class MandatoryFields implements FieldsInterface
 
         if ($parent !== null) {
             $productData[self::ITEM_GROUP_ID] = $parent->getId();
+
+            if ($this->scopeConfig->getValue(self::USE_PARENT_TITLE_ON_CHILDREN, 'store', $store)) {
+                $productData[self::VARIANT_TITLE] = $productData[self::TITLE];
+                $productData[self::TITLE] = $parent->getName();
+            }
 
             if ($this->scopeConfig->getValue(self::USE_PARENT_IMAGE_CONFIG_PATH, 'store', $store)) {
                 $productData[self::IMAGE_URL] = $this->getImageUrl($parent, $store, 'image');
