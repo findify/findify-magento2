@@ -114,11 +114,16 @@ class MandatoryFields implements FieldsInterface
         $productData[self::PRICE] = $this->productHelper->getFormattedPrice($product->getPrice());
         $productData[self::IMAGE_URL] = $this->getImageUrl($product, $store, 'image');
         $productData[self::PRODUCT_URL] = $product->getProductUrl();
-        $productData[self::CATEGORY] = $this->buildCategoryPath($product, $store);
         $productData[self::THUMBNAIL_URL] = $this->getImageUrl($product, $store, 'thumbnail');
         $productData[self::AVAILABILITY] = $this->productStock->getAvailability($product, $store);
         $productData[self::CREATED_AT] = $product->getCreatedAt();
         $productData[self::ITEM_GROUP_ID] = $product->getId();
+        
+        if ($parent !== null) {
+            $productData[self::CATEGORY] = $this->buildCategoryPath($parent, $store);
+        } else {
+            $productData[self::CATEGORY] = $this->buildCategoryPath($product, $store);
+        }
 
         if ($parent !== null) {
             $productData[self::ITEM_GROUP_ID] = $parent->getId();
