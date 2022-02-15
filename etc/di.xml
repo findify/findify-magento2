@@ -23,4 +23,15 @@
             <argument name="collectionProcessor" xsi:type="object">Magento\Catalog\Model\Api\SearchCriteria\ProductCollectionProcessor</argument>
         </arguments>
     </type>
+    <type name="Findify\Findify\Console\CreateSmartCollections">
+        <arguments>
+            <argument name="smartCollectionsHelper" xsi:type="object">Findify\Findify\Helper\SmartCollections\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Findify\Findify\Console\FindifyDataFeedGeneratorCommand">
+        <arguments>
+            <argument name="state" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
+            <argument name="feedGenerator" xsi:type="object">Findify\Findify\Model\ProductFeedGenerator\Proxy</argument>
+        </arguments>
+    </type>
 </config>
