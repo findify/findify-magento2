@@ -7,7 +7,7 @@ For a multi-language or a multi-sites store, a distinct feed can be generated fo
 ## How to install the extension?
 #### Download compressed file
 
-* Download the compressed [ZIP file](https://github.com/madepeople/findify-magento2/archive/master.zip "ZIP") containing the extension from Github.
+* Download the compressed [ZIP file](https://github.com/findify/findify-magento2/archive/refs/heads/master.zip "ZIP") containing the extension from Github.
 * Unzip it at the root of the Magento folder.
 * Check that the webserver is allowed to write in the folder `/media/findify` so the feed can be generated
 * Flush the Magento cache so the XML configuration files are reloaded
