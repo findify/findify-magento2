@@ -151,7 +151,7 @@ class ProductFeedGenerator
                         $parent = $products->getItems()[$parentId] ?? null;
                         // but parent is disabled (null === $parent)
                         if (null === $parent
-                            && in_array($product->getVisibility(), $this->getSelectedVisibilityArray($store))
+                            || in_array($product->getVisibility(), $this->getSelectedVisibilityArray($store))
                         ) {
                             // skip product with certain Visibility
                             continue;
